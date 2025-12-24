@@ -79,7 +79,7 @@ function App() {
       setReview("✨ Reviewing your code...");
 
       const response = await axios.post(
-        "http://localhost:3000/ai/get-review",
+        "https://code-review-backend-w1q1.onrender.com/ai/get-review",
         { code, language }
       );
 

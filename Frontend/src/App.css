@@ -12,6 +12,7 @@ body,
   width: 100%;
   background: radial-gradient(circle at top, #0f2027, #000);
   color: #fff;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 main {
@@ -19,6 +20,7 @@ main {
   display: flex;
   gap: 1.5rem;
   padding: 1.5rem;
+  flex-direction: column; /* Stack on mobile by default */
 }
 
 /* PANELS */
@@ -35,6 +37,7 @@ main {
   flex-direction: column;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  min-height: 0; /* Allow flex shrinking */
 }
 
 /* HEADER */
@@ -44,15 +47,26 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
+
 .language-select {
   background: #0c0c0c;
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 0.4rem 0.6rem;
+  padding: 0.6rem 0.8rem; /* Touch-friendly */
   border-radius: 0.5rem;
   font-size: 0.9rem;
   cursor: pointer;
+  min-width: 110px;
+  flex-shrink: 0;
+}
+
+.language-select:focus {
+  outline: none;
+  border-color: #7f7cff;
+  box-shadow: 0 0 0 2px rgba(127, 124, 255, 0.3);
 }
 
 .review-btn:disabled {
@@ -60,37 +74,60 @@ main {
   cursor: not-allowed;
 }
 
-
-
 .panel-header h2 {
   font-size: 1.1rem;
   font-weight: 600;
+  margin: 0;
 }
 
 .panel-header span {
   font-size: 0.85rem;
   opacity: 0.7;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.4rem;
 }
 
 /* EDITOR */
 .editor-wrapper {
   flex: 1;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 250px; /* Mobile minimum */
 }
 
 .editor {
-  height: 100%;
+  flex: 1;
+  height: auto; /* Let flex handle height */
+  min-height: 250px;
   border-radius: 0.75rem;
   background: #0c0c0c;
   font-family: "Fira Code", monospace;
   font-size: 15px;
   outline: none;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+/* Custom editor scrollbar */
+.editor::-webkit-scrollbar {
+  width: 6px;
+}
+
+.editor::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.editor::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
 }
 
 /* BUTTON */
 .review-btn {
   margin: 1rem;
-  padding: 0.75rem;
+  padding: 1rem 1.5rem; /* Touch-friendly */
   border-radius: 0.75rem;
   border: none;
   font-size: 1rem;
@@ -99,9 +136,11 @@ main {
   background: linear-gradient(135deg, #7f7cff, #4dd2ff);
   color: #000;
   transition: all 0.3s ease;
+  min-height: 48px; /* Touch target */
+  width: 100%; /* Full width on mobile */
 }
 
-.review-btn:hover {
+.review-btn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(127, 124, 255, 0.5);
 }
@@ -113,11 +152,14 @@ main {
   overflow-y: auto;
   font-size: 1rem;
   line-height: 1.6;
+  min-height: 300px;
 }
 
 .review-output pre {
   border-radius: 0.75rem;
   padding: 1rem;
+  background: #0c0c0c;
+  overflow-x: auto;
 }
 
 /* SCROLLBAR */
@@ -128,4 +170,100 @@ main {
 .review-output::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
+}
+
+/* MOBILE FIRST - Below 768px (phones) */
+@media (max-width: 768px) {
+  main {
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .panel {
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  }
+  
+  .panel-header {
+    padding: 0.875rem 1rem;
+  }
+  
+  .panel-header h2 {
+    font-size: 1rem;
+  }
+  
+  .language-select {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    min-width: 100px;
+  }
+  
+  .editor-wrapper {
+    padding: 0.875rem 1rem;
+    min-height: 220px;
+  }
+  
+  .editor {
+    font-size: 14px; /* Smaller on mobile */
+    min-height: 220px;
+  }
+  
+  .review-btn {
+    padding: 1rem;
+    font-size: 0.95rem;
+    margin: 0.875rem 1rem;
+  }
+  
+  .review-output {
+    padding: 1rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* TABLET - 769px to 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  main {
+    flex-direction: row;
+    padding: 1.25rem;
+  }
+  
+  .panel {
+    min-height: 80vh;
+  }
+}
+
+/* DESKTOP - 1025px+ */
+@media (min-width: 1025px) {
+  main {
+    flex-direction: row;
+    padding: 2rem;
+    gap: 2rem;
+  }
+  
+  .panel {
+    max-width: 50%;
+  }
+  
+  .review-btn {
+    width: auto;
+  }
+  
+  .editor {
+    font-size: 16px;
+  }
+}
+
+/* Extra large screens */
+@media (min-width: 1440px) {
+  .panel-header {
+    padding: 1.25rem 2rem;
+  }
+  
+  .editor-wrapper {
+    padding: 1.25rem 1.5rem;
+  }
+  
+  .review-output {
+    padding: 2rem;
+  }
 }

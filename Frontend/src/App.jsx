@@ -33,24 +33,19 @@ const CODE_TEMPLATES = {
   javascript: `function sum(a, b) {
   return a + b;
 }`,
-
   jsx: `export default function App() {
   return <h1>Hello JSX</h1>;
 }`,
-
   typescript: `function sum(a: number, b: number): number {
   return a + b;
 }`,
-
   python: `def sum(a, b):
     return a + b`,
-
   java: `public class Main {
   public static int sum(int a, int b) {
     return a + b;
   }
 }`,
-
   css: `body {
   background-color: #000;
   color: #fff;
@@ -102,7 +97,7 @@ function App() {
 
   return (
     <main>
-      {/* LEFT */}
+      {/* LEFT – Editor */}
       <section className="panel left">
         <header className="panel-header">
           <h2>🧑‍💻 Code Editor</h2>
@@ -120,16 +115,24 @@ function App() {
           </select>
         </header>
 
-        <div className="editor-wrapper">
-          <Editor
-            value={code}
-            onValueChange={setCode}
-            highlight={(code) =>
-              Prism.highlight(code, prismLanguage, language)
-            }
-            padding={16}
-            className="editor"
-          />
+        <div className="editor-container">
+          <div className="editor-toolbar">
+            <span className="editor-label">
+              {language.toUpperCase()} snippet
+            </span>
+          </div>
+
+          <div className="editor-wrapper">
+            <Editor
+              value={code}
+              onValueChange={setCode}
+              highlight={(code) =>
+                Prism.highlight(code, prismLanguage, language)
+              }
+              padding={16}
+              className="editor"
+            />
+          </div>
         </div>
 
         <button
@@ -141,7 +144,7 @@ function App() {
         </button>
       </section>
 
-      {/* RIGHT */}
+      {/* RIGHT – AI Review */}
       <section className="panel right">
         <header className="panel-header">
           <h2>🤖 AI Review</h2>

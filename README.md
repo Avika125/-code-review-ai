@@ -1,4 +1,4 @@
-﻿# -code-review-ai
+﻿# code-review-ai
 
 This project is an AI-powered code reviewer web application built with the MERN-style approach (React frontend + Node/Express backend, plus a cloud AI API). It lets users paste code, choose a language, and get structured AI feedback on errors, improvements, and best practices.
 
@@ -57,3 +57,4 @@ Demonstrates full-stack skills: building a REST API, integrating a third‑party
 Shows understanding of environment variables, API keys, and deploying separate frontend/backend services to cloud platforms.
 
 Provides a practical example of how to turn raw AI capabilities into a focused developer tool (code review agent) with clear prompts and UX.
+
